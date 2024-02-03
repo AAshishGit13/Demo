@@ -1,0 +1,26 @@
+import time
+
+def print_envelope():
+    print("  ************")
+    print(" *  VALENTINE *")
+    print("*      DAY      *")
+    print("*      ❤️        *")
+    print(" *      ENVELOPE  *")
+    print("  ************")
+
+def open_envelope():
+    for i in range(6):
+        print("\033c")  # Clear console (for a cleaner animation on some terminals)
+        print_envelope()
+        time.sleep(0.5)
+
+def main():
+    print("Slowly opening the Valentine's Day envelope...")
+    time.sleep(1)
+    open_envelope()
+
+if __name__ == "__main__":
+    main()
+
+
+
