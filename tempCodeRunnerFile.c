@@ -1,88 +1,50 @@
- #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-void merge(int arr[], int left, int middle, int right) {
-    int i, j, k;
-    int n1 = middle - left + 1;
-    int n2 = right - middle;
+#define MAX_SIZE 10
 
-    // Create temporary arrays
-    int L[n1], R[n2];
+struct Stack {
+    int arr[MAX_SIZE];
+    int top;
+};
 
-    // Copy data to temporary arrays L[] and R[]
-    for (i = 0; i < n1; i++)
-        L[i] = arr[left + i];
-    for (j = 0; j < n2; j++)
-        R[j] = arr[middle + 1 + j];
-
-    // Merge the temporary arrays back into arr[left..right]
-    i = 0;
-    j = 0;
-    k = left;
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
-            i++;
-        } else {
-            arr[k] = R[j];
-            j++;
-        }
-        k++;
-    }
-
-    // Copy the remaining elements of L[], if there are any
-    while (i < n1) {
-        arr[k] = L[i];
-        i++;
-        k++;
-    }
-
-    // Copy the remaining elements of R[], if there are any
-    while (j < n2) {
-        arr[k] = R[j];
-        j++;
-        k++;
-    }
+void initialize(struct Stack* stack) {
+    stack->top = -1;
 }
 
-// Main function to perform merge sort
-void mergeSort(int arr[], int left, int right) {
-    if (left < right) {
-        // Same as (left+right)/2, but avoids overflow for large left and right
-        int middle = left + (right - left) / 2;
+int isEmpty(struct Stack* stack) {
+    return stack->top == -1;
+}
 
-        // Sort first and second halves
-        mergeSort(arr, left, middle);
-        mergeSort(arr, middle + 1, right);
+int isFull(struct Stack* stack) {
+    return stack->top == MAX_SIZE - 1;
+}
 
-        // Merge the sorted halves
-        merge(arr, left, middle, right);
+void push(struct Stack* stack, int value) {
+    if (isFull(stack)) {
+        printf("Stack Overflow\n");
+        return;
     }
+    stack->arr[++stack->top] = value;
+}
+
+int pop(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow\n");
+        return -1; // or any value indicating underflow
+    }
+    return stack->arr[stack->top--];
 }
 
 int main() {
-    int n;
+    struct Stack stack;
+    initialize(&stack);
 
-    // Get the number of elements from the user
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    push(&stack, 1);
+    push(&stack, 2);
+    push(&stack, 3);
 
-    int arr[n];
-
-    // Get elements from the user
-    printf("Enter %d elements:\n", n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-
-    // Perform merge sort
-    mergeSort(arr, 0, n - 1);
-
-    // Display the sorted array
-    printf("\nSorted array:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
+    printf("Popped element: %d\n", pop(&stack));
 
     return 0;
 }
