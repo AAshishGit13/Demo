@@ -9,10 +9,10 @@ int main() {
     srand(time(NULL));
 
     // Generate a random number between 1 and 100
-    number = rand() % 100 + 1;
+    number = rand() % 10 + 1;
 
     printf("Welcome to the Number Guessing Game!\n");
-    printf("Try to guess the number between 1 and 100.\n");
+    printf("Try to guess the number between 1 and 10.\n");
 
     do {
         printf("Enter your guess: ");
